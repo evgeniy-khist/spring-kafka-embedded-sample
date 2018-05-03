@@ -3,7 +3,7 @@ package com.example.kafka.sample.embedded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import com.example.kafka.sample.embedded.service.TestKafkaListener;
+import com.example.kafka.sample.embedded.service.TestKafkaListener2;
 import java.util.Iterator;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -27,8 +27,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource("classpath:test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@EmbeddedKafka(topics = "test_topic")
-public class KafkaListenerTest {
+@EmbeddedKafka(topics = "test_topic2")
+public class KafkaListenerTest2 {
 
   @Autowired
   private KafkaEmbedded kafkaEmbedded;
@@ -37,11 +37,11 @@ public class KafkaListenerTest {
   private KafkaTemplate<String, String> kafkaTemplate;
 
   @Autowired
-  private TestKafkaListener testKafkaListener;
+  private TestKafkaListener2 testKafkaListener2;
 
   @Before
   public void setUp() {
-    testKafkaListener.resetCounter();
+    testKafkaListener2.resetCounter();
   }
 
   @Test
@@ -49,10 +49,10 @@ public class KafkaListenerTest {
     String testKey = "test_key";
     String testData = "test_data";
 
-    kafkaTemplate.send("test_topic", testKey, testData);
+    kafkaTemplate.send("test_topic2", testKey, testData);
 
     try (Consumer<String, String> consumer = createConsumer()) {
-      kafkaEmbedded.consumeFromAnEmbeddedTopic(consumer, "test_topic");
+      kafkaEmbedded.consumeFromAnEmbeddedTopic(consumer, "test_topic2");
       ConsumerRecords<String, String> records = KafkaTestUtils.getRecords(consumer, 2_000);
       Iterator<ConsumerRecord<String, String>> iterator = records.iterator();
       ConsumerRecord<String, String> record = iterator.next();
@@ -62,7 +62,7 @@ public class KafkaListenerTest {
       assertFalse(iterator.hasNext());
     }
 
-    assertEquals(1, testKafkaListener.getCounter());
+    assertEquals(1, testKafkaListener2.getCounter());
   }
 
   private Consumer<String, String> createConsumer() {
