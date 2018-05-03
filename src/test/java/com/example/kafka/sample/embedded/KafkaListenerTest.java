@@ -3,7 +3,6 @@ package com.example.kafka.sample.embedded;
 import static com.example.kafka.sample.embedded.config.KafkaEmbeddedConfig.TEST_TOPIC;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 import com.example.kafka.sample.embedded.service.TestKafkaListener;
 import java.util.Iterator;
@@ -22,15 +21,12 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @TestPropertySource("classpath:test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-// Checking that KafkaEmbedded can be used with @DirtiesContext
-@DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 public class KafkaEmbeddedTest {
 
   @Autowired
@@ -48,21 +44,7 @@ public class KafkaEmbeddedTest {
   }
 
   @Test
-  public void test01() throws Exception {
-    sendReceiveRecord();
-  }
-
-  @Test
-  public void test02() throws Exception {
-    sendReceiveRecord();
-  }
-
-  @Test
-  public void test03() throws Exception {
-    sendReceiveRecord();
-  }
-
-  private void sendReceiveRecord() throws Exception {
+  public void sendReceiveRecord() throws Exception {
     String testKey = "test_key";
     String testData = "test_data";
 
