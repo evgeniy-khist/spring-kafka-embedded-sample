@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource("classpath:test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class KafkaEmbeddedTest {
+public class KafkaListenerTest {
 
   @Autowired
   private KafkaEmbedded kafkaEmbedded;
