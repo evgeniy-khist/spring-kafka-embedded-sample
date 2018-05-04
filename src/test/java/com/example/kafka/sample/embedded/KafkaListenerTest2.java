@@ -18,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.test.context.EmbeddedKafka;
-import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,11 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource("classpath:test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@EmbeddedKafka(topics = {"test_topic", "test_topic2"})
-public class KafkaListenerTest2 {
-
-  @Autowired
-  private KafkaEmbedded kafkaEmbedded;
+public class KafkaListenerTest2 extends KafkaTestBase {
 
   @Autowired
   private KafkaTemplate<String, String> kafkaTemplate;
